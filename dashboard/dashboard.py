@@ -125,10 +125,17 @@ rfm_df = create_rfm_df(orders)
 st.title("Dashboard Penjualan & Pengiriman Olist")
 st.caption(f"Periode: {start_date:%d %b %Y} – {end_date:%d %b %Y}")
 
-k1, k2, k3, k4, k5 = st.columns(5)
+st.markdown(
+    "<style>[data-testid='stMetricValue']{font-size:1.7rem;}</style>",
+    unsafe_allow_html=True,
+)
+
+k1, k2, k3 = st.columns(3)
 k1.metric("Total pesanan", f"{orders['order_id'].nunique():,}".replace(",", "."))
 k2.metric("Pendapatan barang", f"BRL {filtered['price'].sum() / 1e6:,.2f} jt")
 k3.metric("Rata-rata nilai pesanan", f"BRL {orders['payment_value'].mean():,.0f}")
+
+k4, k5, _ = st.columns(3)
 k4.metric("Pesanan terlambat", f"{orders['is_late'].mean() * 100:.1f}%")
 k5.metric("Rata-rata skor ulasan", f"{orders['review_score'].mean():.2f} / 5")
 
